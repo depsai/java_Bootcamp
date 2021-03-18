@@ -1,0 +1,67 @@
+
+- name : ec2-launcher
+
+  hosts : localhost
+
+  become: false
+  
+  connection : local
+
+  tasks :
+  
+  - name: Setting up Security/Firewall Group
+
+    ec2_group:
+
+      name: default_ec2
+
+      description: Rules Allowing Traffic on port 22 and 80
+
+      region: us-east-2
+
+      rules:
+
+        - proto: tcp
+
+          from_port: 80
+
+          to_port: 80
+
+          cidr_ip: 0.0.0.0/0
+
+        - proto: tcp
+
+          from_port: 22
+
+          to_port: 22
+
+          cidr_ip: 0.0.0.0/0
+
+      rules_egress:
+
+        - proto: all
+
+          cidr_ip: 0.0.0.0/0
+
+  - name : launch ec2
+
+    ec2 : 
+
+     instance_type : t2.micro
+
+     key_name : devops-key
+
+     image : ami-0f7919c33c90f5b58
+
+     region : us-east-2
+
+     group : default_ec2
+
+     count : 1
+
+     vpc_subnet_id : subnet-6d59c221
+
+     wait : yes
+
+     assign_public_ip : yes
+     
