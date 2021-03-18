@@ -3,26 +3,27 @@
 
 name: Java Maven Release
 
-on:
+on: 
   milestone:
     types: [closed]
-
 jobs:
-  build:
-
+  create-release:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.8
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+    - uses: actions/checkout@master
     - name: Create Release Notes
-      uses: docker://decathlon/release-notes-generator-action:2.0.1
+      uses: ./
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         OUTPUT_FOLDER: temp_release_notes
         USE_MILESTONE_TITLE: "true"
+    - name: Upload Release Notes to Wiki
+      uses: docker://decathlon/wiki-page-creator-action:latest
+      env:
+        ACTION_MAIL: oss@decathlon.com
+        ACTION_NAME: decathlonbot
+        GH_PAT: ${{ secrets.GH_PAT }}
+        MD_FOLDER: temp_release_notes
+        OWNER: decathlon
+        REPO_NAME: pull-request-labeler-action
+        SKIP_MD: README.md
