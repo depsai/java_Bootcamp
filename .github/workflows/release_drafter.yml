@@ -1,24 +1,14 @@
-# This workflow will build a Java project with Maven
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Release notes
+name: Release_Drafter
 
 on:
   push:
     branches:
-      - "main"
+      - main
 
 jobs:
-  pre-release:
-    name: "Release Generator"
-    runs-on: "ubuntu-latest"
-
+  update_release_draft:
+    runs-on: ubuntu-latest
     steps:
-      # ...
-      - name: "Build & test"
-        run: |
-          echo "done!"
       - uses: release-drafter/release-drafter@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
