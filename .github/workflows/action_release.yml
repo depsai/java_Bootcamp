@@ -1,0 +1,14 @@
+name: Release
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate release notes
+        uses: raulanatol/github-actions-releaser@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
