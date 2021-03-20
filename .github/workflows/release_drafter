@@ -1,19 +1,15 @@
 name: Release_Drafter
-
 on:
   push:
     branches:
       - main
-
 jobs:
-  update_release_draft:
+  release_draft:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
-      # Runs a set of command using the runners shell
-      - name: Run a one-line script
-      - uses: release-drafter/release-drafter@master
+      - name: Github draft Releaser
+        uses: release-drafter/release-drafter@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
