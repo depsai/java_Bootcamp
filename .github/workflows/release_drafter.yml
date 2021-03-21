@@ -1,16 +1,14 @@
-name: Draft Release
-
-on:
-  push:
-    branches:
-      - main
-
+name: Checkmarx SAST Scan
+on: [push]
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v1
-      - uses: coffeedoughnuts/clog@v1
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Checkmarx Action
+      uses: checkmarx-ts/checkmarx-github-action@<version>
+      with:
+        cxServer: https://github.com/depsai/java_Bootcamp.git
+        cxUsername: depsai
+        cxPassword: ${{ secrets.CX_PASSWORD }}
