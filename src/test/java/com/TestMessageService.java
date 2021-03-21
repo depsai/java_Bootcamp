@@ -34,7 +34,7 @@ public class TestMessageService {
 
 		//System.out.println("hello");
 
-		Assertions.assertEquals(messageService.soft_git(), "Hello git users welcome today");
+		Assertions.assertEquals(messageService.soft_git(), "Hello git users welcome");
 
 	}
 
