@@ -13,3 +13,6 @@ jobs:
         cxUsername: depsai
         cxPassword: ${{ secrets.CX_PASSWORD }}
         cxTeam: \CxServer\SP\Company\TeamA
+        cxGithubIssues: true
+        cxGithubLabels: bug,test
+        cxGithubAssignees: miguelfreitas93
