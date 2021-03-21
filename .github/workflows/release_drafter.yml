@@ -7,7 +7,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
     - name: Checkmarx Action
-      uses: checkmarx-ts/checkmarx-github-action@<version>
+      uses: checkmarx-ts/checkmarx-github-action@v1.0.3
       with:
         cxServer: https://github.com/depsai/java_Bootcamp.git
         cxUsername: depsai
