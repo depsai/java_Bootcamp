@@ -1,67 +1,19 @@
-# *************************************
-# Charba GitHub Actions build script 
-# Copyright © 2020 pepstock.org      
-# *************************************
-# Workflow name
-# 
-name: Build
-# 
-# Runs only on push events on branch 'master'
-# 
+name: SonarCloud
 on:
-   push:
-      branches:
-         - main
-# 
-# Workflow environment and steps
-# 
+  push:
+    branches:
+      - master
 jobs:
-   build:
-      runs-on: ubuntu-latest
-      
-      steps:
-         # 
-         # Checkout the repository content
-         # 
-         - name: Checkout
-           uses: actions/checkout@v2
-           with:
-             # Disabling shallow clone 
-             fetch-depth: 0
-         # 
-         # Remove 'pom.xml' otherwise Sonar will fail forcing to use Maven   
-         # 
-         - name: Remove pom
-           run: rm -f pom.xml    
-         # 
-         # Setup Java JDK
-         # 
-         - name: Setup JDK
-           uses: actions/setup-java@v1
-           with:
-             java-version: '11'
-         # 
-         # Setup Node.js (for Sonar)
-         # 
-         - name: Setup Node.js
-           uses: actions/setup-node@v2    
-           with:
-             node-version: '12'         
-         # 
-         # Run the build of project by ANT
-         # 
-         - name: Build
-           run: ant buildAll
-         # 
-         # Run the Sonar scan
-         # 
-         - name: SonarCloud Scan
-           uses: sonarsource/sonarcloud-github-action@v1.4
-           env:
-             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-         # 
-         # Print out the artifacts list
-         # 
-         - name: Print artifacts
-           run: ls -R ./dist
+  build:
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: '11'
+    - name: Analyze with SonarCloud
+      run: ./mvnw -B verify sonar:sonar -Dsonar.projectKey=baralga -Dsonar.organization=baralga -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
