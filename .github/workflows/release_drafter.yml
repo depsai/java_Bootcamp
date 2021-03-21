@@ -12,3 +12,4 @@ jobs:
         cxServer: https://github.com/depsai/java_Bootcamp.git
         cxUsername: depsai
         cxPassword: ${{ secrets.CX_PASSWORD }}
+        cxTeam: \CxServer\SP\Company\TeamA
