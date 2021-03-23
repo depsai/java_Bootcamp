@@ -1,23 +1,41 @@
+name: Changelog Generator
 on:
-  # Trigger analysis when pushing in master or pull requests, and when creating
-  # a pull request. 
-  push:
-    branches:
-      - main
+  pull_request:
+   branches:
+     - main
 
-name: Main Workflow
 jobs:
-  sonarcloud:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        # Disabling shallow clone is recommended for improving relevancy of reporting
-        fetch-depth: 0
-    - name: Remove pom
-      run: rm -f pom.xml
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  generate:
+      name: Changelog Generator
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+          with:
+               fetch-depth: 0
+        - name: Create changelog
+
+          uses: ./
+        - name: Upload artifacts
+          uses: actions/upload-artifact@v2
+          with:
+              name: changelog
+              path: /home/runner/work/_temp/_github_home/CHANGELOG.md
+
+  upload:
+       name: Upload Changelog to PR
+       runs-on: ubuntu-latest
+       needs: generate
+       steps:
+         - uses: actions/checkout@v2
+           with:
+               ref: ${{ github.event.pull_request.head.ref }}
+         - name: Download results from the generate job
+           uses: actions/download-artifact@v2
+           with:
+               name: changelog
+         - name: Add artifact to repo
+           run: |
+               git config --global user.name "john doe"
+               git add --all
+               git commit -m "docs: Generated changelog for PR"
+               git push
