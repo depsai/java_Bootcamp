@@ -13,7 +13,6 @@ jobs:
       - name: executing remote ssh commands using ssh private key
         uses: appleboy/ssh-action@v0.1.10
         with:
-#          host: github-ssh-test-vm
           host: github-ssh-test-vm
           username: deepankumarpandurangan
           key: ${{ secrets.SSH_SECRET }}
