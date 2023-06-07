@@ -23,6 +23,7 @@ jobs:
         echo "$(git log --format=%B -n 1 HEAD)" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
 
+
     # In case of a pull_request event, the commit we care about is HEAD^2, that
     # is, the second parent of the pull request merge commit.
     # The current branch name is directly given by GITHUB_HEAD_REF
