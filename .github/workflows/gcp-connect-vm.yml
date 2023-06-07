@@ -7,25 +7,18 @@ on:
 
 jobs:
   build:
-    name: Build
-    runs-on: ubuntu-latest
-    
-    # Add "id-token" with the intended permissions.
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-
-    steps:
-    # actions/checkout MUST come before auth
-    - uses: 'actions/checkout@v3'
-
-    - id: 'auth'
-      name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v1'
-      with:
-        workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-        service_account: '637669025280-compute@developer.gserviceaccount.com'
-
-    # ... further steps are automatically authenticated
+      name: Build
+      runs-on: ubuntu-latest
+      steps:
+      - name: executing remote ssh commands using ssh private key
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: github-ssh-test-vm
+          username: deepankumarpandurangan
+          key: ${{ secrets.SSH_SECRET }}
+          port: 22
+          script: |
+            echo "welcome"
+            whoami
     
     
