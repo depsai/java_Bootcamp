@@ -27,8 +27,8 @@ jobs:
         with:
           host: 34.100.171.247
           username: deepankumarpandurangan
-#          key_path:  
+          key_path: ./private_key.ppk
           port: 22
           script: |
-            echo "Hello, GCP VM!"
+            hostname
             # Add your desired commands here
