@@ -21,7 +21,7 @@ jobs:
           hostname
           pwd
           ls -ltr
-          ping 20.198.115.116
+          ping -c 3 20.198.115.116
           
       - name: 🔎 Check IP
         run: curl https://api.ipify.org
