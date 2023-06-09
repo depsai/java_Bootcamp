@@ -21,8 +21,10 @@ jobs:
           hostname
           pwd
           ls -ltr
-          ipconfig
           ping 20.198.115.116
+          
+      - name: 🔎 Check IP
+        run: curl https://api.ipify.org
 
       - name: SSH into VM
         uses: appleboy/ssh-action@master
