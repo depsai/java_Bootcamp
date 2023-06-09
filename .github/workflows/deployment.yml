@@ -31,7 +31,46 @@ jobs:
         with:
           host: 20.198.115.116
           username: github_ssh_test_user
-          key_path: ./github-ssh-test_key_ppk.ppk
+          key: |
+              -----BEGIN RSA PRIVATE KEY-----
+              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
+              -----END RSA PRIVATE KEY-----
           port: 22
           script: |
             hostname
