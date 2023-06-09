@@ -21,13 +21,15 @@ jobs:
           hostname
           pwd
           ls -ltr
+          ip -a
+          ping 20.198.115.116
 
       - name: SSH into VM
         uses: appleboy/ssh-action@master
         with:
-          host: 34.100.171.247
-          username: deepankumarpandurangan
-          key_path: ./private_key.ppk
+          host: 20.198.115.116
+          username: github_ssh_test_user
+          key_path: ./github-ssh-test_key_ppk.ppk
           port: 22
           script: |
             hostname
