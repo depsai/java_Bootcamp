@@ -21,7 +21,7 @@ jobs:
           hostname
           pwd
           ls -ltr
-          ip -a
+          ipconfig
           ping 20.198.115.116
 
       - name: SSH into VM
