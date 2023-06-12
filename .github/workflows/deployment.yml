@@ -34,6 +34,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            ROOT_PATH=$PWD
+            echo $ROOT_PATH
+            whoami
             hostname
+            pwd
             ls -ltr
             # Add your desired commands here
