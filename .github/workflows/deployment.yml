@@ -40,4 +40,6 @@ jobs:
             hostname
             pwd
             ls -ltr
+            mkdir test_user
+            ls -ltr
             # Add your desired commands here
