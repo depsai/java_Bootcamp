@@ -39,7 +39,7 @@ jobs:
             pwd
             ls -ltr
             cd mvnw
-            ls-ltr
+            ls -ltr
             mkdir test_user
             ls -ltr
             
