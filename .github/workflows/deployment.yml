@@ -33,6 +33,8 @@ jobs:
           username: arvind
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
+          source: mvnw/*
+          target: "/home/arvind/"
           script: |
             ROOT_PATH=$PWD
             echo $ROOT_PATH
@@ -42,4 +44,5 @@ jobs:
             ls -ltr
             mkdir test_user
             ls -ltr
+            
             # Add your desired commands here
