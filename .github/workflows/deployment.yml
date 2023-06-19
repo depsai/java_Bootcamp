@@ -24,7 +24,7 @@ jobs:
         source: "./mvnw"
         target: "/home/arvind"
 
-    - name: Move files to correct place
+    - name: SSH into VM
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: 4.224.33.11
@@ -38,8 +38,11 @@ jobs:
             hostname
             pwd
             ls -ltr
+            cd mvnw
+            ls-ltr
             mkdir test_user
             ls -ltr
+            
         #script: rm -rf ${{ secrets.COPY_LAST }};mv ${{ secrets.COPY_FROM }} ${{ secrets.COPY_LAST }};chcon -Rt httpd_sys_content_t ${{ secrets.COPY_LAST }}; nginx -s reload
 
 
