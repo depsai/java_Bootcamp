@@ -1,41 +1,51 @@
-name: SSH into GCP VM
+name: Deploy On SSH Azure VM Server
 
 on:
   push:
+    tags:
+      - v*.*.*
     branches:
       - main
 
 jobs:
   ssh:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      
-      - name: Build the Application using Ant Build
-        run: |
-          ROOT_PATH=$PWD
-          echo $ROOT_PATH
-          whoami
-          hostname
-          pwd
-          ls -ltr
-#          ping -c 3 20.198.115.116
-          
-#      - name: 🔎 Check IP
-#        run: curl https://api.ipify.org
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: SSH into VM
-        uses: appleboy/ssh-action@master
-        with:
-          host: 4.224.33.11
-          username: arvind
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          source: ./pom.xml
-          target: "/home/arvind/"
-          script: |
+    - name: Set up Node.js
+      uses: actions/setup-node@master
+      with:
+        node-version: 14.x
+
+    - name: Install Gatsby CLI
+      run: npm install -g gatsby-cli
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: gatsby build
+
+    - name: Copy files via scp
+      uses: appleboy/scp-action@master              
+      with:
+        host: 4.224.33.11
+        username: arvind
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        source: "./mvnw"
+        target: "/home/arvind"
+
+    - name: Move files to correct place
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: 4.224.33.11
+        username: arvind
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
             ROOT_PATH=$PWD
             echo $ROOT_PATH
             whoami
@@ -44,5 +54,8 @@ jobs:
             ls -ltr
             mkdir test_user
             ls -ltr
-            
+        #script: rm -rf ${{ secrets.COPY_LAST }};mv ${{ secrets.COPY_FROM }} ${{ secrets.COPY_LAST }};chcon -Rt httpd_sys_content_t ${{ secrets.COPY_LAST }}; nginx -s reload
+
+
+        
             # Add your desired commands here
