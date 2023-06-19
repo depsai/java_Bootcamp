@@ -14,20 +14,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@master
-      with:
-        node-version: 14.x
-
-    - name: Install Gatsby CLI
-      run: npm install -g gatsby-cli
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build
-      run: gatsby build
-
     - name: Copy files via scp
       uses: appleboy/scp-action@master              
       with:
