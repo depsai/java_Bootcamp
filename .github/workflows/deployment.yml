@@ -33,7 +33,7 @@ jobs:
           username: arvind
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: mvnw/*
+          source: ./pom.xml
           target: "/home/arvind/"
           script: |
             ROOT_PATH=$PWD
